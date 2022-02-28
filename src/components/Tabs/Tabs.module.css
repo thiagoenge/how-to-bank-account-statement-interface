@@ -1,0 +1,24 @@
+.tabsWrapper {
+  display: flex;
+  font-size: inherit;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+}
+.tabsWrapper .tabItem {
+  list-style: none;
+  padding: var(--space-md) var(--space-lg);
+  color: var(--color-primary);
+  font-size: var(--font-size-md);
+  margin: 0 var(--space-sm);
+}
+.tabsWrapper .tabItem:hover {
+  background-color: var(--color-light);
+}
+.tabsWrapper .tabItem.pill {
+  border-radius: var(--border-radius-pill);
+}
+.tabsWrapper .tabItem.pill.active {
+  background-color: var(--color-primary);
+  color: var(--color-theme-primary);
+}

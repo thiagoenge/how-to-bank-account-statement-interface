@@ -1,0 +1,20 @@
+.searchWrapper {
+  /* border: 1px solid blue; */
+  width: 100%;
+}
+.searchContent {
+  display: flex;
+  background-color: var(--color-gray-4);
+  border-radius: var(--border-radius-input);
+  height: 100%;
+  padding: var(--space-md) calc(var(--space-lg) + var(--space-sm));
+}
+.searchContent input {
+  background-color: transparent;
+  border: 0 none;
+  width: 100%;
+}
+.searchContent input:focus {
+  outline: 0;
+  border-radius: var(--border-radius-input);
+}
