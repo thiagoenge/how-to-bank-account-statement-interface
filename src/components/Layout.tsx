@@ -15,13 +15,19 @@ const Layout = ({ children, title = 'This is the default title', section }: Prop
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <header>
-      <h1>{section}</h1>
+    <header className='headerWrapper'>
+      <div className='container'>
+        <h1 className='sectionTitle'>{section}</h1>
+      </div>
     </header>
-    {children}
+    <main className='container'>
+      {children}
+    </main>
     <footer>
       <hr />
-      <span>made with ❤️ by @thiagoenge</span>
+      <div className="container">
+        <span>made with ❤️ by @thiagoenge</span>
+      </div>
     </footer>
   </div>
 )
