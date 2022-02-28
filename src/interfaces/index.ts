@@ -35,3 +35,32 @@ enum Entry {
   CREDIT = "CREDIT",
   DEBIT = "DEBIT",
 }
+
+export type Tabs = {
+  items: any;
+  type: "pill";
+  onChange: Function;
+};
+
+export enum AccountStatementFilterStatus {
+  ALL = "Tudo",
+  CREDIT = "Entradas",
+  DEBIT = "Saídas",
+  FUTURE = "Futuro",
+}
+export type AccountStatementFilter = {
+  navigation: AccountStatementFilterStatus[];
+};
+
+export type Search = {
+  onChange: Function;
+};
+
+export type Timeline = {
+  [key: string]: AccountStatementItemWrapper;
+};
+
+export type TimelineItem = {
+  item: AccountStatementItemWrapper;
+  isHead: boolean;
+};
