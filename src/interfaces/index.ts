@@ -56,11 +56,14 @@ export type Search = {
   onChange: Function;
 };
 
+type TimelineParsedDate = {
+  dateParsed: string;
+};
 export type Timeline = {
-  [key: string]: AccountStatementItemWrapper;
+  [key: string]: AccountStatementItemWrapper & TimelineParsedDate;
 };
 
 export type TimelineItem = {
-  item: AccountStatementItemWrapper;
+  item: AccountStatementItemWrapper & TimelineParsedDate;
   isHead: boolean;
 };
