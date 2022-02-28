@@ -14,7 +14,7 @@ const Tabs = ({items,type='pill', onChange}:Tabs) => {
   return (
     <ul className={style.tabsWrapper}>
       {items.map(tab=>(
-        <li className={classNames(
+        <li key={`${tab}-${tab.length}`}className={classNames(
           style.tabItem, 
           style[type],{ 
             [style.active]:tab === active
