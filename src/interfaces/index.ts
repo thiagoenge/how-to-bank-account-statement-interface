@@ -17,23 +17,23 @@ export type AccountStatementItem = {
   scheduled: boolean;
   dateEvent: string;
 };
-enum Status {
+export enum Status {
   COMPLETED = "COMPLETED",
   REFUNDED = "REFUNDED",
   PENDING = "PENDING",
 }
-enum Source {
+export enum Source {
   TRANSFER = "TRANSFER",
   PAYMENT = "PAYMENT",
+}
+export enum Entry {
+  CREDIT = "CREDIT",
+  DEBIT = "DEBIT",
 }
 enum Type {
   BANKSLIP = "BANKSLIP",
   INTERNAL = "INTERNAL",
   EXTERNAL = "INTERNAL",
-}
-enum Entry {
-  CREDIT = "CREDIT",
-  DEBIT = "DEBIT",
 }
 
 export type Tabs = {
@@ -63,7 +63,17 @@ export type Timeline = {
   [key: string]: AccountStatementItemWrapper & TimelineParsedDate;
 };
 
-export type TimelineItem = {
-  item: AccountStatementItemWrapper & TimelineParsedDate;
-  isHead: boolean;
+export type TimelineItemHead = {
+  date: string;
+  amountTotal: number;
+  isFirst: boolean;
+};
+export type TimelineItemTransactions = {
+  items: AccountStatementItem[];
+};
+
+export type TransactionType = {
+  status: keyof typeof Status;
+  source: keyof typeof Source;
+  entry: keyof typeof Entry;
 };
