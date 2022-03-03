@@ -16,7 +16,7 @@
   background-color: var(--color-light);
 }
 .tabsWrapper .tabItem.pill {
-  border-radius: var(--border-radius-pill);
+  border-radius: var(--border-radius-lg);
 }
 .tabsWrapper .tabItem.pill.active {
   background-color: var(--color-primary);

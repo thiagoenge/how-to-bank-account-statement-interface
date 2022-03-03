@@ -5,7 +5,7 @@
 .searchContent {
   display: flex;
   background-color: var(--color-gray-4);
-  border-radius: var(--border-radius-input);
+  border-radius: var(--border-radius-md);
   height: 100%;
   padding: var(--space-md) calc(var(--space-lg) + var(--space-sm));
 }
@@ -16,5 +16,5 @@
 }
 .searchContent input:focus {
   outline: 0;
-  border-radius: var(--border-radius-input);
+  border-radius: var(--border-radius-md);
 }

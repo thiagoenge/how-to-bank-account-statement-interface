@@ -3,5 +3,6 @@
   grid-template-columns: [first] 40% [line2] 60%;
   column-gap: 16px;
   justify-content: space-between;
+  margin: calc(var(--space-md) * 5) 0;
   /* border: 1px solid red; */
 }

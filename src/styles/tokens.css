@@ -1,8 +1,10 @@
 :root {
   --color-primary: #fe3e6d;
+  --color-secondary: #1a93da;
   --color-light: #eaf7ff;
   --color-gray-off-black: #3b3b3b;
   --color-gray-1: #6b7076;
+  --color-gray-2: #c7cbcf;
   --color-gray-3: #dee4e9;
   --color-gray-4: #f0f4f8;
   --color-theme-primary: #fff;
@@ -11,6 +13,7 @@
   --space-sm: 4px;
   --space-md: 8px;
   --space-lg: 16px;
+  --space-xl: 24px;
 
   --font-size-base: 16px;
   --font-size-xs: 0.5rem;
@@ -19,6 +22,6 @@
   --font-size-lg: 1.6rem;
   --font-size-xl: 2rem;
 
-  --border-radius-pill: 32px;
-  --border-radius-input: 16px;
+  --border-radius-lg: 32px;
+  --border-radius-md: 16px;
 }
