@@ -1,39 +1,27 @@
-import { AccountStatement,Timeline, TimelineItem } from 'src/interfaces'
-import style from './Timeline.module.css'
-
-
-const TimelineItem = ({item, isHead}:TimelineItem) => {
-  return (
-    <div className="timelineItemWrapper">
-      <div className="timelineDate">
-        {item.dateParsed}
-      </div>
-      {isHead ? (
-        <>
-          <div className="timelineTransactionType">
-            Tipo de Transação
-          </div>
-          <div className="timelineTransactionDate">
-            Data
-          </div>
-        </>
-      ) : null}
-    </div>
-  )
-}
+import classNames from 'classnames'
+import { Timeline } from 'src/interfaces'
+import TimelineItemHead from './ItemHead'
+import TimelineItemTransactions from './ItemTransactions'
 
 const Timeline = ({timeline}:Timeline) => {
   console.log('timeline', timeline)
- 
-  // return <div>Hello</div>
-   return Object.keys(timeline).map((tmItem,index)=>{
-    console.log('tmItem', tmItem)
-    return (
-      <div>
-        <TimelineItem isHead={!index} item={timeline[tmItem]} />
-      </div>
-    )
-   })
+  return (
+    Object.keys(timeline).map((tmItem,index)=>{
+      const timelineItem = timeline[tmItem]
+      return (
+        <div>
+          <TimelineItemHead 
+            date={timelineItem.dateParsed} 
+            amountTotal={timeline.amountTotal}
+            isFirst={!index}
+          />
+          <TimelineItemTransactions 
+            items={timelineItem.items}
+          />
+        </div>
+      )
+    })
+  )
 }
 
 export default Timeline
