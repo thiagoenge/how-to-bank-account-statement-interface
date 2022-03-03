@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import fetcher from 'src/utils/fetcher'
-import {parseItemDate, sortDates} from 'src/utils/handle-dates'
+import {parseItemHeadDate, sortDates} from 'src/utils/handle-dates'
 import Layout from 'src/components/Layout'
 import Filter from 'src/components/Filter'
 import Timeline from 'src/components/Timeline'
@@ -16,7 +16,7 @@ const IndexPage = () => {
       console.log('data', data)
       const sortDatesDesc = sortDates(results)
       const parsedTimeline = sortDatesDesc.reduce((acc, item)=>{
-        acc[item.date] = {...item, dateParsed:parseItemDate(item.date)}
+        acc[item.date] = {...item, dateParsed:parseItemHeadDate(item.date)}
         return acc
       },{})
       console.log('parsedTimeline', Object.keys(parsedTimeline))
