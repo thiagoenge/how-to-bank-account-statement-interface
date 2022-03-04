@@ -2,7 +2,7 @@
   position: relative;
   border: 1px solid var(--color-gray-2);
   border-radius: var(--border-radius-md);
-  padding: calc(var(--space-md) * 3) var(--space-lg);
+  padding: calc(var(--space-md) * 3) 0;
   margin: var(--space-xl) 0;
 }
 .timelineItemTransactionsWrapper::before,
@@ -24,7 +24,8 @@
 .itemRow {
   margin-bottom: calc(var(--space-md) * 3);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(12, 1fr);
+  padding: 0 var(--space-lg);
 }
 .itemRow:last-child {
   margin: 0;
@@ -37,6 +38,13 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  grid-column: 1 / 4;
+}
+.itemType {
+  grid-column: 4 / 7;
+}
+.itemDateEvent {
+  grid-column: 7 / 11;
 }
 .itemType,
 .itemDateEvent {
@@ -48,6 +56,11 @@
   font-size: var(--font-size-md);
   font-weight: 400;
   color: var(--color-gray-off-black);
+  text-align: right;
+  grid-column: 11 / 13;
+}
+.itemAmount::before {
+  content: "";
 }
 .itemAmount.entrance,
 .itemAmount.exit {
@@ -56,8 +69,14 @@
 .itemAmount.entrance {
   color: var(--color-secondary);
 }
+.itemAmount.entrance::before {
+  content: "+ ";
+}
 .itemAmount.exit {
   color: var(--color-primary);
+}
+.itemAmount.exit::before {
+  content: "- ";
 }
 .itemAmount.refund {
   text-decoration: line-through;

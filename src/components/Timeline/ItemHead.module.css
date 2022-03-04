@@ -1,27 +1,35 @@
 .timelineItemHeadWrapper {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  padding: 0 var(--space-lg);
+  grid-template-columns: repeat(12, 1fr);
+  --border-compensation: 2px;
+  padding: 0 calc(var(--space-lg) + var(--border-compensation));
 }
 .timelineDate {
   font-size: var(--font-size-sm);
   font-weight: 900;
   color: var(--color-gray-off-black);
+  grid-column: 1 / 4;
 }
 .timelineTransactionType {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   font-weight: 400;
   color: var(--color-gray-1);
+  grid-column: 4 / 7;
 }
 .timelineTransactionDate {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   font-weight: 900;
   color: var(--color-primary);
+  grid-column: 7 / 11;
 }
 .timelineValue {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   font-weight: 400;
   color: var(--color-gray-1);
+  text-align: right;
+  grid-column: 11 / 13;
 }
 .timelineAmountTotal {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-off-black);
 }

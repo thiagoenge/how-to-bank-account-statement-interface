@@ -77,3 +77,14 @@ export type TransactionType = {
   source: keyof typeof Source;
   entry: keyof typeof Entry;
 };
+
+export enum TransactionTypesMap {
+  "COMPLETED.PAYMENT.DEBIT" = "Pagamento Realizado",
+  "COMPLETED.TRANSFER.DEBIT" = "Transferencia Realizada",
+  "COMPLETED.PAYMENT.CREDIT" = "Pagamento Recebido",
+  "COMPLETED.TRANSFER.CREDIT" = "Transferencia Recebida",
+  "PENDING.PAYMENT.DEBIT" = "Pagamento Agendado",
+  "PENDING.TRANSFER.DEBIT" = "Transferencia Agendada",
+  "REFUNDED.PAYMENT.CREDIT" = "Pagamento Estornado",
+  "REFUNDED.TRANSFER.CREDIT" = "Transferencia Estornada",
+}

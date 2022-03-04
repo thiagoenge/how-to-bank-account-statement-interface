@@ -1,36 +1,15 @@
 import { 
   TimelineItemTransactions, 
   AccountStatementItem,
-  TransactionType ,
-  Status,
-  Source, 
-  Entry
+  TransactionTypesMap,
 } from 'src/interfaces'
 import classNames from 'classnames'
 import {parseItemTransactionDate} from 'src/utils/handle-dates'
 import {formatCurrency} from 'src/utils/handle-currency'
 import style from './ItemTransactions.module.css'
 
-const transactionType = ({status}:TransactionType)=>{
-  switch (status) {
-    case Status.COMPLETED:
-      return {
-        [`${Source.PAYMENT}.${Entry.DEBIT}`]: 'Pagamento Realizado',
-        [`${Source.TRANSFER}.${Entry.DEBIT}`]: 'Transfência Realizada',
-        [`${Source.PAYMENT}.${Entry.CREDIT}`]: 'Pagamento Recebido',
-        [`${Source.TRANSFER}.${Entry.CREDIT}`]: 'Transfência Recebida'
-      }
-      break;
-    case Status.PENDING:
-      
-      break;
-    case Status.REFUNDED:
-      
-      break;
-  
-    default:
-      break;
-  }
+const transactionType = ({status, source, entry}) => {
+  return TransactionTypesMap[`${status}.${source}.${entry}`]
 }
 
 const TimelineItemTransactions = ({items}:TimelineItemTransactions) => {
@@ -42,12 +21,12 @@ const TimelineItemTransactions = ({items}:TimelineItemTransactions) => {
             <span className={style.itemIcon}>1</span>
             {item.actor}
           </div>
-          <div className={style.itemType}>Pagamento Realizado</div>
+          <div className={style.itemType}>{transactionType(item)}</div>
           <div className={style.itemDateEvent}>{parseItemTransactionDate(item.dateEvent)}</div>
           <div className={classNames(style.itemAmount,{
-            [style.refund]:false,
-            [style.entrance]:true,
-            [style.exit]:false,
+            [style.refund]:item.status === 'REFUNDED',
+            [style.entrance]:item.status !== 'REFUNDED' && item.entry === 'CREDIT',
+            [style.exit]:item.status !== 'REFUNDED' && item.entry === 'DEBIT',
           })}>{formatCurrency(item.amount)}</div>
         </div>
       ))}

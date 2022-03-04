@@ -1,4 +1,5 @@
 import { TimelineItemHead } from 'src/interfaces'
+import { formatCurrency } from 'src/utils/handle-currency'
 import style from './ItemHead.module.css'
 
 const TimelineItemHead = ({date,amountTotal, isFirst}:TimelineItemHead) => {
@@ -17,8 +18,8 @@ const TimelineItemHead = ({date,amountTotal, isFirst}:TimelineItemHead) => {
         {isFirst ? 
           <span className={style.timelineHead}>Valor</span> 
           : <span className={style.timelineAmountTotal}>
-            Saldo do dia
-            <strong>{amountTotal}</strong>
+            Saldo do dia{' '}
+            <strong>{formatCurrency(amountTotal)}</strong>
           </span>
         }
       </div>

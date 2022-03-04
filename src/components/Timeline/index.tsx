@@ -8,11 +8,12 @@ const Timeline = ({timeline}:Timeline) => {
   return (
     Object.keys(timeline).map((tmItem,index)=>{
       const timelineItem = timeline[tmItem]
+    
       return (
         <div>
           <TimelineItemHead 
             date={timelineItem.dateParsed} 
-            amountTotal={timeline.amountTotal}
+            amountTotal={timelineItem.amountTotal}
             isFirst={!index}
           />
           <TimelineItemTransactions 
