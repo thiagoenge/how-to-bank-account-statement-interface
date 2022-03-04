@@ -12,7 +12,6 @@ const Tabs = ({items,type='pill', onChange}:Tabs) => {
   }
 
   useDidUpdateEffect(()=>{
-    console.log('useDidUpdateEffect',active)
     onChange(active)
   },[active])
 

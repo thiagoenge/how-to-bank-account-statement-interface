@@ -29,18 +29,15 @@ const IndexPage = () => {
   },[initialStatementAccount])
   
   useEffect(()=>{
-    console.log('isFIltered effect', statementAccount)
     setFilteredStatementAccount(statementAccount)
   },[isFiltered])
  
   useEffect(()=>{
-    console.log('isSearched effect', statementAccount)
     setSearchedStatementAccount(statementAccount)
   },[isSearched])
 
   const handleFilter = (status:keyof typeof AccountStatementFilterStatus):void=>{
     const dataToPerform = isSearched ? searchedStatementAccount : initialStatementAccount
-    console.log('handleFIlter -> dataToPerform', dataToPerform)
     if(status === 'ALL'){
       setStatementAccount(dataToPerform)
       setIsFiltered(false)
@@ -67,7 +64,6 @@ const IndexPage = () => {
     const dataToPerform = isFiltered ? filteredStatementAccount : initialStatementAccount
     if(!cleanSearchVal){
       setStatementAccount(dataToPerform)
-      console.log(isSearched)
       setIsSearched(false)
       return
     }
@@ -82,7 +78,6 @@ const IndexPage = () => {
         const item = items[itemIndex];
         for (let i = 0; i < searchFields.length; i++) {
           const key = searchFields[i];
-          console.log('item[key]', item[key])
           if(item[key].toString().toLowerCase().match(cleanSearchVal)){
             newItems.push(item)
           }
