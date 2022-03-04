@@ -24,6 +24,7 @@
 .itemRow {
   margin-bottom: calc(var(--space-md) * 3);
   display: grid;
+  align-items: center;
   grid-template-columns: repeat(12, 1fr);
   padding: 0 var(--space-lg);
 }

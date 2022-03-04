@@ -7,7 +7,7 @@ import {
   HandleIcons,
 } from 'src/interfaces'
 import classNames from 'classnames'
-import {parseItemTransactionDate} from 'src/utils/handle-dates'
+import {parseItemTransactionDate,isToday} from 'src/utils/handle-dates'
 import {formatCurrency} from 'src/utils/handle-currency'
 import creditIcon from 'src/public/assets/entrance.png';
 import debitIcon from 'src/public/assets/exit.png';
@@ -40,7 +40,10 @@ const TimelineItemTransactions = ({items}:TimelineItemTransactions) => {
             </span>
             {item.actor}
           </div>
-          <div className={style.itemType}>{transactionType(item)}</div>
+          <div className={style.itemType}>
+            {isToday(new Date(item.dateEvent)) ? 'Hoje - ' : ''}
+            {transactionType(item)}
+            </div>
           <div className={style.itemDateEvent}>{parseItemTransactionDate(item.dateEvent)}</div>
           <div className={classNames(style.itemAmount,{
             [style.refund]:item.status === 'REFUNDED',

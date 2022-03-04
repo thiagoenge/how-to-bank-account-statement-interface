@@ -25,6 +25,15 @@ const parseItemTransactionDate = (dateString: string) => {
   return parsedItemDate;
 };
 
+const isToday = (td: Date) => {
+  const d = new Date();
+  return (
+    td.getDate() == d.getDate() &&
+    td.getMonth() == d.getMonth() &&
+    td.getFullYear() == d.getFullYear()
+  );
+};
+
 const sortDates = (dates) => {
   return dates.sort(function (a, b) {
     const dateA = a.date.split("-").join("");
@@ -33,4 +42,4 @@ const sortDates = (dates) => {
   });
 };
 
-export { parseItemHeadDate, parseItemTransactionDate, sortDates };
+export { parseItemHeadDate, parseItemTransactionDate, sortDates, isToday };
