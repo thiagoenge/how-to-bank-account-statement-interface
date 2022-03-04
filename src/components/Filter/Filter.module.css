@@ -1,8 +1,13 @@
 .filterAccountStatement {
   display: grid;
-  grid-template-columns: [first] 40% [line2] 60%;
+  grid-template: 2fr / 1fr;
   column-gap: 16px;
   justify-content: space-between;
   margin: calc(var(--space-md) * 5) 0;
   /* border: 1px solid red; */
+}
+@media (min-width: 720px) {
+  .filterAccountStatement {
+    grid-template-columns: [first] 40% [line2] 60%;
+  }
 }
