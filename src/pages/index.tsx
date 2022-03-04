@@ -5,6 +5,7 @@ import {parseItemHeadDate, sortDates} from 'src/utils/handle-dates'
 import Layout from 'src/components/Layout'
 import Filter from 'src/components/Filter'
 import Timeline from 'src/components/Timeline'
+import { AccountStatementFilterStatus } from 'src/interfaces'
 
 const IndexPage = () => {
   const { data, error } = useSWR('/api/statement', fetcher)
@@ -30,8 +31,7 @@ const IndexPage = () => {
     setStatementAccount(initialStatementAccount)
   },[initialStatementAccount])
 
-  const handleFilter = (status):void=>{
-    console.log('handleFilter', status)
+  const handleFilter = (status:keyof typeof AccountStatementFilterStatus):void=>{
     if(status === 'ALL'){
       setStatementAccount(initialStatementAccount)
       return
@@ -39,21 +39,20 @@ const IndexPage = () => {
     const newStatementAccount = {...initialStatementAccount}
     Object.keys(newStatementAccount).map((timelineKey)=>{
       const timelineItem = newStatementAccount[timelineKey]
-      console.log('timelineItem.items', timelineItem.items)
       let newTimelineItems:[]
       if(status!=='FUTURE') {
         newTimelineItems = timelineItem.items.filter(item=>item.entry===status)
       } else{
         newTimelineItems = timelineItem.items.filter(item=>item.scheduled)
       }
-      console.log('newTImelineItems', newTimelineItems, timelineKey)
       
       newStatementAccount[timelineKey] = {...timelineItem, items:newTimelineItems}
       
     })
-    console.log('newStatementAccount',newStatementAccount)
     setStatementAccount(newStatementAccount)
   }
+
+  const handleSearch = ()
 
   return (
     <Layout title="Extrato Conta Corrente - Banco Cora" section='Extrato'>
