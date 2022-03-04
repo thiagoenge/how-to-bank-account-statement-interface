@@ -1,29 +1,34 @@
-import classNames from 'classnames'
 import { Timeline } from 'src/interfaces'
+import TimelineEmpty from './Empty'
 import TimelineItemHead from './ItemHead'
 import TimelineItemTransactions from './ItemTransactions'
 
 const Timeline = ({timeline}:Timeline) => {
-
+  const indexFirst = timeline.findIndex(t => t.items.length)
+  if(indexFirst<0){
+    return <TimelineEmpty />
+  }
   return (
-    Object.keys(timeline).map((tmItem,index)=>{
-      const timelineItem = timeline[tmItem]
-      if(!timelineItem.items.length){
-        return null
-      }
-      return (
-        <div>
-          <TimelineItemHead 
-            date={timelineItem.dateParsed} 
-            amountTotal={timelineItem.amountTotal}
-            isFirst={!index}
-          />
-          <TimelineItemTransactions 
-            items={timelineItem.items}
-          />
-        </div>
-      )
-    })
+    <>
+      {timeline.map((timelineItem,index)=>{
+        if(!timelineItem.items.length){
+          return null
+        }
+        return (
+          <div>
+            <TimelineItemHead 
+              date={timelineItem.date} 
+              amountTotal={timelineItem.amountTotal}
+              isFirst={indexFirst === index}
+            />
+            <TimelineItemTransactions 
+              items={timelineItem.items}
+            />
+          </div>
+        )
+      })
+    }
+    </>
   )
 }
 

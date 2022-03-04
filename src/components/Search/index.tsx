@@ -1,7 +1,8 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useState } from 'react'
 import _debounce from 'lodash/debounce';
 import { Search } from 'src/interfaces'
 import style from './Search.module.css'
+import { useDidUpdateEffect } from 'src/utils/custom-hooks';
 
 const Search = ({onChange}:Search) => {
   const [searchInput, setSearchInput] = useState('')
@@ -13,7 +14,7 @@ const Search = ({onChange}:Search) => {
   
   const debounceSearch = useCallback(_debounce(handleSearchChange, 1000), []);
 
-  useEffect(()=>{
+  useDidUpdateEffect(()=>{
     onChange(searchInput)
   },[searchInput])
 
