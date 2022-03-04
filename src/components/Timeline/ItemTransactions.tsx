@@ -1,15 +1,32 @@
+import Image from 'next/image'
 import { 
   TimelineItemTransactions, 
   AccountStatementItem,
   TransactionTypesMap,
+  TransactionType,
+  HandleIcons,
 } from 'src/interfaces'
 import classNames from 'classnames'
 import {parseItemTransactionDate} from 'src/utils/handle-dates'
 import {formatCurrency} from 'src/utils/handle-currency'
+import creditIcon from 'src/public/assets/entrance.png';
+import debitIcon from 'src/public/assets/exit.png';
+import scheduledIcon from 'src/public/assets/scheduled.png';
 import style from './ItemTransactions.module.css'
 
-const transactionType = ({status, source, entry}) => {
+const transactionType = ({status, source, entry}:TransactionType) => {
   return TransactionTypesMap[`${status}.${source}.${entry}`]
+}
+
+const handleIcon = ({entry, scheduled}:HandleIcons) => {
+  const iconsMap = {
+    scheduled:scheduledIcon,
+    debit: debitIcon,
+    credit:creditIcon
+  }
+  
+  return scheduled ? iconsMap.scheduled : iconsMap[entry.toLowerCase()]
+  
 }
 
 const TimelineItemTransactions = ({items}:TimelineItemTransactions) => {
@@ -18,7 +35,9 @@ const TimelineItemTransactions = ({items}:TimelineItemTransactions) => {
       {items.map((item:AccountStatementItem)=>(
         <div className={style.itemRow}>
           <div className={style.itemActor}>
-            <span className={style.itemIcon}>1</span>
+            <span className={style.itemIcon}>
+              <Image src={handleIcon(item)} />
+            </span>
             {item.actor}
           </div>
           <div className={style.itemType}>{transactionType(item)}</div>

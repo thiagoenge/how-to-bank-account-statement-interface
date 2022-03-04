@@ -30,6 +30,10 @@
 .itemRow:last-child {
   margin: 0;
 }
+.itemIcon {
+  margin-right: var(--space-lg);
+  display: inline-block;
+}
 
 .itemActor {
   font-size: var(--font-size-md);

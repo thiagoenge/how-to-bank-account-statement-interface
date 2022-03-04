@@ -60,7 +60,7 @@ type TimelineParsedDate = {
   dateParsed: string;
 };
 export type Timeline = {
-  [key: string]: AccountStatementItemWrapper & TimelineParsedDate;
+  timeline: AccountStatementItemWrapper[];
 };
 
 export type TimelineItemHead = {
@@ -76,6 +76,11 @@ export type TransactionType = {
   status: keyof typeof Status;
   source: keyof typeof Source;
   entry: keyof typeof Entry;
+};
+
+export type HandleIcons = {
+  entry: keyof typeof Entry;
+  scheduled: boolean;
 };
 
 export enum TransactionTypesMap {
