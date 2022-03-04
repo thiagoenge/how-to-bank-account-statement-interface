@@ -1,6 +1,6 @@
 # implement a interface to bank account statement
 
-this repository demonstrates a way to implements an interface to statement bank account with some filters, search using technologies like react with NextJs and Typescript, hooks, api to retrieve a mock data, css grid, css var tokens, css modules
+this repository demonstrates a way to implements an interface to statement bank account with some filters, search. Using technologies like react with NextJs and Typescript, hooks, api to retrieve a mock data, css grid, css var tokens, css modules
 
 
 ## Run Locally
