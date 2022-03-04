@@ -2,21 +2,13 @@ import {AccountStatementFilter, AccountStatementFilterStatus} from 'src/interfac
 import Tabs from 'src/components/Tabs'
 import Search from 'src/components/Search'
 import style from './Filter.module.css'
-const accountStatementeFilterNav:AccountStatementFilter = {
-  navigation:[
-    AccountStatementFilterStatus.ALL,
-    AccountStatementFilterStatus.CREDIT,
-    AccountStatementFilterStatus.DEBIT,
-    AccountStatementFilterStatus.FUTURE
-  ]
-}
 
-const Filter = () => (
+const Filter = ({onChange}) => (
   <div className={style.filterAccountStatement}>
     <Tabs 
-      items={accountStatementeFilterNav.navigation} 
+      items={AccountStatementFilterStatus} 
       type='pill' 
-      onChange={()=>null}/>
+      onChange={onChange}/>
     <Search onChange={()=>null} />
   </div>
 )

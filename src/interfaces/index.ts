@@ -49,7 +49,7 @@ export enum AccountStatementFilterStatus {
   FUTURE = "Futuro",
 }
 export type AccountStatementFilter = {
-  navigation: AccountStatementFilterStatus[];
+  navigation: keyof typeof AccountStatementFilterStatus[];
 };
 
 export type Search = {

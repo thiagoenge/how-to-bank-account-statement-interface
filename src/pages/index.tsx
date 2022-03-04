@@ -8,29 +8,63 @@ import Timeline from 'src/components/Timeline'
 
 const IndexPage = () => {
   const { data, error } = useSWR('/api/statement', fetcher)
-  const [statementAccount, setStatementAccount] = useState(null)
+  const [initialStatementAccount, setInitialStatementAccount] = useState(null)
+  const [statementAccount, setStatementAccount] = useState(initialStatementAccount)
   
   useEffect(()=>{
     if(data) {
       const {results} = data
-      console.log('data', data)
       const sortDatesDesc = sortDates(results)
       const parsedTimeline = sortDatesDesc.reduce((acc, item)=>{
-        acc[item.date] = {...item, dateParsed:parseItemHeadDate(item.date)}
+        acc[item.date] =  {
+          ...item, 
+          dateParsed:parseItemHeadDate(item.date)
+        }
         return acc
       },{})
-      console.log('parsedTimeline', Object.keys(parsedTimeline))
-      setStatementAccount(parsedTimeline)
+      setInitialStatementAccount(parsedTimeline)
     }
   },[data])
 
+  useEffect(()=>{
+    setStatementAccount(initialStatementAccount)
+  },[initialStatementAccount])
+
+  const handleFilter = (status):void=>{
+    console.log('handleFilter', status)
+    if(status === 'ALL'){
+      setStatementAccount(initialStatementAccount)
+      return
+    }
+    const newStatementAccount = {...initialStatementAccount}
+    Object.keys(newStatementAccount).map((timelineKey)=>{
+      const timelineItem = newStatementAccount[timelineKey]
+      console.log('timelineItem.items', timelineItem.items)
+      let newTimelineItems:[]
+      if(status!=='FUTURE') {
+        newTimelineItems = timelineItem.items.filter(item=>item.entry===status)
+      } else{
+        newTimelineItems = timelineItem.items.filter(item=>item.scheduled)
+      }
+      console.log('newTImelineItems', newTimelineItems, timelineKey)
+      
+      newStatementAccount[timelineKey] = {...timelineItem, items:newTimelineItems}
+      
+    })
+    console.log('newStatementAccount',newStatementAccount)
+    setStatementAccount(newStatementAccount)
+  }
+
   return (
     <Layout title="Extrato Conta Corrente - Banco Cora" section='Extrato'>
-      <Filter/>
       {error ? <div>Ops...alguma coisa deu errado. Nosso time recebeu esse alerta, tente novamente daqui a pouco</div> : null }
       {!statementAccount ? 
-        <div>Carregando...</div> 
-        : <Timeline timeline={statementAccount}/>
+          <div>Carregando...</div> 
+          :
+          <>
+            <Filter onChange={handleFilter} />
+            <Timeline timeline={statementAccount}/>
+          </>
       }
     </Layout>
   )
