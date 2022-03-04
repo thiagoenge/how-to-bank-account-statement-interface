@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import Link from 'next/link'
 import Head from 'next/head'
 
 type Props = {
@@ -9,7 +8,7 @@ type Props = {
 }
 
 const Layout = ({ children, title = 'This is the default title', section }: Props) => (
-  <div>
+  <div className='content'>
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
@@ -20,13 +19,12 @@ const Layout = ({ children, title = 'This is the default title', section }: Prop
         <h1 className='sectionTitle'>{section}</h1>
       </div>
     </header>
-    <main className='container'>
+    <main className='main container'>
       {children}
     </main>
-    <footer>
-      <hr />
+    <footer className='footerWrapper'>
       <div className="container">
-        <span>made with ❤️ by @thiagoenge</span>
+        <span>made with ❤️ by <a href="https://me.ahazou.com/frontenge">@thiagoenge</a></span>
       </div>
     </footer>
   </div>

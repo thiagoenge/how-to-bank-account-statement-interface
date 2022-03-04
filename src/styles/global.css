@@ -66,6 +66,12 @@ button:focus {
   outline: 1px solid var(--color-primary);
 }
 
+.content {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -84,4 +90,11 @@ button:focus {
 .headerWrapper .sectionTitle {
   text-align: left;
   font-size: var(--font-size-lg);
+}
+
+/* FOOTER */
+.footerWrapper {
+  padding: var(--space-xl) var(--space-md);
+  border-top: 1px solid var(--color-gray-3);
+  margin-top: var(--space-lg);
 }
