@@ -1,106 +1,64 @@
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import fetcher from 'src/utils/fetcher'
-import {parseItemHeadDate, sortDates} from 'src/utils/handle-dates'
+import {sortDates} from 'src/utils/handle-dates'
 import Layout from 'src/components/Layout'
-import Filter from 'src/components/Filter'
+import Filter, { FilterData } from 'src/components/Filter'
 import Timeline from 'src/components/Timeline'
 import { AccountStatementFilterStatus, AccountStatementItem, AccountStatementItemWrapper } from 'src/interfaces'
 
 const IndexPage = () => {
-  const { data, error } = useSWR('/api/statement', fetcher)
-  const [initialStatementAccount, setInitialStatementAccount] = useState(null)
-  const [filteredStatementAccount, setFilteredStatementAccount] = useState(null)
-  const [searchedStatementAccount, setSearchedStatementAccount] = useState(null)
-  const [statementAccount, setStatementAccount] = useState(initialStatementAccount)
-  const [isSearched, setIsSearched] = useState(false)
-  const [isFiltered, setIsFiltered] = useState(false)
+  const { data, error } = useSWR('/api/statement', fetcher);
+  const [sortedData, setSortedData] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
 
   useEffect(()=>{
-    if(data) {
-      const {results} = data
-      const sortDatesDesc = sortDates(results)
-      setInitialStatementAccount(sortDatesDesc)
+    if (data) {
+      const sortDatesDesc = sortDates(data.results)
+      setSortedData(sortDatesDesc);
+      setFilteredData(sortDatesDesc);
     }
-  },[data])
+  }, [data])
 
-  useEffect(()=>{
-    setStatementAccount(initialStatementAccount)
-  },[initialStatementAccount])
-  
-  useEffect(()=>{
-    setFilteredStatementAccount(statementAccount)
-  },[isFiltered])
- 
-  useEffect(()=>{
-    setSearchedStatementAccount(statementAccount)
-  },[isSearched])
+  const onFilterChange = (filterData: FilterData) => {
+    if (!sortedData) return;
 
-  const handleFilter = (status:keyof typeof AccountStatementFilterStatus):void=>{
-    const dataToPerform = isSearched ? searchedStatementAccount : initialStatementAccount
-    if(status === 'ALL'){
-      setStatementAccount(dataToPerform)
-      setIsFiltered(false)
-      return
-    }
-    
-    setStatementAccount(()=>{
-      return dataToPerform.map((timelineItem:AccountStatementItemWrapper)=>{
-        let newTimelineItems:AccountStatementItem[] | []
-        if(status!=='FUTURE') {
-          newTimelineItems = timelineItem.items.filter(item=>item.entry===status)
-        } else{
-          newTimelineItems = timelineItem.items.filter(item=>item.scheduled)
-        }
-        return {...timelineItem, items:newTimelineItems}
-      })
-    })
-    setIsFiltered(true)
+    const newFilteredData = sortedData.map((timelineItem: AccountStatementItemWrapper) => ({
+      ...timelineItem,
+      items: timelineItem.items.filter(item => filterByStatus(item, filterData.status) && filterByText(item, filterData.text))
+    })).filter(timelineItem => timelineItem.items.length > 0);
+
+    setFilteredData(newFilteredData);
   }
 
-  
-  const handleSearch = (searchVal:string)=>{
-    const cleanSearchVal = searchVal.toLowerCase().replace(/r\$|\.|,/, '').trim()
-    const dataToPerform = isFiltered ? filteredStatementAccount : initialStatementAccount
-    if(!cleanSearchVal){
-      setStatementAccount(dataToPerform)
-      setIsSearched(false)
-      return
-    }
-    const results = [];
+  const filterByStatus = (item: AccountStatementItem, status: AccountStatementFilterStatus) => {
+    if (status === AccountStatementFilterStatus.ALL) return true;
+    
+    if (status === AccountStatementFilterStatus.PENDING && item.status === 'PENDING') return true;
+
+    if (item.status !== 'PENDING' && AccountStatementFilterStatus[item.entry] === status) return true;
+
+    return false;
+  }
+
+  const filterByText = (item: AccountStatementItem, text: string) => {
     const searchFields = ["actor", "amount"];
-   
-    for (let index = 0; index < dataToPerform.length; index++) {
-      const newStatementAccount = [...dataToPerform]
-      const {items} = newStatementAccount[index]
-      const newItems = []
-      for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
-        const item = items[itemIndex];
-        for (let i = 0; i < searchFields.length; i++) {
-          const key = searchFields[i];
-          if(item[key].toString().toLowerCase().match(cleanSearchVal)){
-            newItems.push(item)
-          }
-        }
-      }
-      results.push({
-        ...statementAccount[index], 
-        items:newItems
-      })
-    }
-    setStatementAccount(results)
-    setIsSearched(true)
+    const sanitizedText = text.toLowerCase().replace(/r\$|\.|,/, '').trim();
+    
+    if (sanitizedText === "") return true;
+    
+    return searchFields.findIndex(key => item[key].toString().toLowerCase().match(sanitizedText)) >= 0;
   }
 
   return (
     <Layout title="Extrato Conta Corrente - Banco Cora" section='Extrato'>
       {error ? <div>Ops...alguma coisa deu errado. Nosso time recebeu esse alerta, tente novamente daqui a pouco</div> : null }
-      {!statementAccount ? 
+      {!filteredData ? 
           <div>Carregando...</div> 
           :
           <>
-            <Filter onChange={handleFilter} onSearch={handleSearch} />
-            <Timeline timeline={statementAccount}/>
+            <Filter onChange={onFilterChange} />
+            <Timeline timeline={filteredData}/>
           </>
       }
     </Layout>
