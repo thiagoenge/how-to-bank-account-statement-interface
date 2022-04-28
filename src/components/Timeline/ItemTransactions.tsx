@@ -26,14 +26,13 @@ const handleIcon = ({entry, scheduled}:HandleIcons) => {
   }
   
   return scheduled ? iconsMap.scheduled : iconsMap[entry.toLowerCase()]
-  
 }
 
 const TimelineItemTransactions = ({items}:TimelineItemTransactions) => {
   return (
     <div className={style.timelineItemTransactionsWrapper}>
-      {items.map((item:AccountStatementItem)=>(
-        <div className={style.itemRow}>
+      {items.map((item: AccountStatementItem, index: number) => (
+        <div key={`timeline-item-transaction-${index}`} className={style.itemRow}>
           <div className={style.itemActor}>
             <span className={style.itemIcon}>
               <Image src={handleIcon(item)} />
